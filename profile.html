@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./style/profile.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg custom-navbar fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./images/icon.jpg" alt="Logo" width="50" height="40" class="d-inline-block align-text-top" />
+        TestTrack
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="./create.html">Create Test</a></li>
+          <li class="nav-item"><a class="nav-link" href="./dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="./aboutus.html">About Us</a></li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link-active" href="./profile.html">Profile</a>
+          </li>
+          <li class="nav-item">
+            <button id="logout" class="btn btn-danger">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Content -->
+  <div class="container mt-5">
+    <div class="card profile-card">
+      <div class="card-body">
+        <h2 class="card-title text-center">User Profile</h2>
+        <div class="text-center mt-4">
+          <img src="./images/review3.avif" alt="User Avatar" class="profile-avatar">
+        </div>
+        <div class="mt-4">
+          <h5>Name:</h5>
+          <p id="profile-name" class="text-muted"></p>
+        </div>
+        <div class="mt-4">
+          <h5>Email:</h5>
+          <p id="profile-email" class="text-muted"></p>
+        </div>
+        <div class="mt-4">
+          <h5>Role:</h5>
+          <p id="profile-role" class="text-muted">User</p>
+        </div>
+        <div class="mt-4">
+          <h5>Joined On:</h5>
+          <p id="profile-joined" class="text-muted"></p>
+        </div>
+        <div class="mt-4">
+          <h5>Total Tests Attempted:</h5>
+          <p id="profile-tests-attempted" class="text-muted"></p>
+        </div>
+        <div class="mt-4">
+          <h5>Average Test Score:</h5>
+          <p id="profile-average-score" class="text-muted"></p>
+        </div>
+        <div class="mt-4">
+          <h5>Recently Completed Test:</h5>
+          <p id="profile-recent-test" class="text-muted">No recent test available</p>
+        </div>
+        <div class="mt-4">
+          <h5>Preferred Test Categories:</h5>
+          <p id="profile-preferred-categories" class="text-muted">General Knowledge, Science</p>
+        </div>
+        <div class="text-center mt-4">
+          <button id="edit-profile" class="btn btn-primary">Edit Profile</button>
+          <button id="logout" class="btn btn-danger">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 TestTrack. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Retrieve logged-in user data from sessionStorage
+    const user = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
+    if (!user) {
+      alert('You are not logged in!');
+      window.location.href = 'login.html';
+    } else {
+      document.getElementById('profile-name').innerText = user.name || 'Not Provided';
+      document.getElementById('profile-email').innerText = user.email || 'Not Provided';
+      document.getElementById('profile-joined').innerText = user.joinedOn || 'Not Provided';
+      document.getElementById('profile-tests-attempted').innerText = user.testsAttempted || '0';
+      document.getElementById('profile-average-score').innerText = user.averageScore ? user.averageScore + '%' : 'N/A';
+      document.getElementById('profile-recent-test').innerText = user.recentTest || 'No recent test available';
+      document.getElementById('profile-preferred-categories').innerText = user.preferredCategories || 'Not Provided';
+    }
+
+    // Logout functionality
+    document.getElementById('logout').addEventListener('click', function () {
+      if (confirm('Are you sure you want to logout?')) {
+        sessionStorage.removeItem('loggedInUser');
+        alert('Logged out successfully!');
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Edit Profile functionality (stub for further implementation)
+    document.getElementById('edit-profile').addEventListener('click', function () {
+      alert('Edit Profile functionality coming soon!');
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

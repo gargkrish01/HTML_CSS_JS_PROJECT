@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style/aboutus.css">
+    <title>About Us | TestTrack</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #e3f9ff, #f9fcff);
+            color: #000000;
+            margin: 0;
+            padding-top: 70px;
+            /* Adjust padding for the fixed navbar */
+        }
+
+        h1,
+        h2,
+        h3,
+        h5,
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar Styles */
+        .custom-navbar {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #e0e0e0;
+            /* Flexbox for row alignment */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand img {
+            border-radius: 5px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #000000 !important;
+            padding: 8px 12px;
+            font-size: 1rem;
+            font-family: 'Times New Roman', Times, serif;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #28a745 !important;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .allbuttons {
+            background-color: #1e7e34;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .allbuttons:hover {
+            background-color: #155724;
+        }
+
+
+        /* Container Styles */
+        .container {
+            padding-top: 100px;
+            margin-top: 80px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        /* Typography */
+        h1 {
+            color: #28a745;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #28a745;
+            font-size: 28px;
+            margin: 20px 0;
+        }
+
+        p {
+            color: #000000;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 15px;
+        }
+
+        button a{
+            text-decoration: none;
+            color: #ffffff;
+            font-size: large;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                gap: 10px;
+            }
+
+            .navbar-right {
+                gap: 10px;
+            }
+
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-link {
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="custom-navbar">
+        <div class="navbar-brand">
+            <img src="./images/icon.jpg" alt="Logo" width="50" height="40" />
+            <span>TestTrack</span>
+        </div>
+        <ul class="navbar-nav">
+            <li><a class="nav-link" href="./index.html">Home</a></li>
+            <li><a class="nav-link" href="./create.html">Create Test</a></li>
+            <li><a class="nav-link active" href="./dashboard.html">Dashboard</a></li>
+            <li><a class="nav-link" href="./aboutus.html">About Us</a></li>
+        </ul>
+        <div class="navbar-right">
+            <a class="nav-link" href="#">Profile</a>
+            <button id="logout" class="btn btn-danger">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Content goes here -->
+        <h1>About Us</h1>
+
+        <div class="image-placeholder">
+            <img id="dynamicImage" src="./images/logo.webp" alt="Random Image" width="100" height="100">
+        </div>
+
+        <h2>Welcome to the TestTrack</h2>
+        <p>TestTrack is an innovative online learning platform designed to empower students and aspirants in achieving
+            their educational and career goals. With a strong focus on preparing users for competitive exams and
+            enhancing their learning experience, TestTrack provides a comprehensive range of tools and resources.</p>
+
+        <h2>Our Mission</h2>
+        <p>Our Mission is to empower learners by providing accessible, high-quality, and effective educational resources
+            that foster academic and professional success. We aim to create a supportive and engaging learning
+            environment that helps students and aspirants overcome challenges, build confidence, and achieve their
+            dreams.</p>
+
+        <h2>Meet Our Team</h2>
+        <h3>Krish Garg</h3>
+        <br>
+        <h3>Hitesh Gautum</h3>
+        <br>
+        <h3>Kanika Garg </h3>
+
+
+        <h2>Why Choose Us?</h2>
+        <p>TestTrack is your trusted learning partner, offering expert-led content, personalized study paths, and
+            interactive resources to simplify complex topics. We focus on accessibility and affordability, with
+            AI-driven tools and progress analysis, helping students and professionals achieve their goals.</p>
+        <h2>Join Us</h2>
+        <p>Become part of TestTrack and take your learning to the next level. By joining our platform, you'll gain
+            access to expert-led courses, personalized learning paths, and cutting-edge tools to boost your knowledge
+            and skills. Whether you're a student aiming for top scores or a professional seeking to advance your career,
+            TestTrack offers everything you need to succeed. Join us today and start your journey toward excellence!</p>
+
+        <button><a href="./login.html">Get Started</a></button>
+    </div>
+    </div>
+</body>
+
+</html>

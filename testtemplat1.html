@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./images/icon.jpg">
+    <title>Test Template</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Header Styles */
+        .header-box {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #287cc5;
+            color: rgb(0, 0, 0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid #0056b3;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header-left .score-info {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        /* .timer-container {
+            text-align: right;
+        }
+
+        .timer-container span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .pause-resume {
+            padding: 5px 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .pause-resume:hover {
+            background-color: #003f7d;
+        } -->
+
+        /* Timer Container Styles */
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: right;
+            margin-right: 3vw;
+        }
+
+        #time {
+            font-size: 28px;
+            font-weight: bold;
+            color: #28a745;
+            padding: 10px 20px;
+            background-color: white;
+            border: 3px solid #007bff;
+            border-radius: 50%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pause-resume {
+            padding: 10px 20px;
+            background-color: #ff5c5c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pause-resume:hover {
+            background-color: #e44d4d;
+        }
+
+        .pause-resume:active {
+            background-color: #c13b3b;
+            transform: translateY(2px);
+        }
+        .blur {
+        filter: blur(5px);
+        pointer-events: none;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1200;
+        background-color: #fff;
+        padding: 20px 40px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .modal h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .modal button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .modal button:hover {
+        background-color: #0056b3;
+    }
+
+        /* Instruction Box */
+
+        .instructions {
+            margin: 120px 20px 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructions h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        /* Question Styles */
+        #testForm {
+            margin: 20px;
+        }
+
+        .question {
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            height: 60%;
+            width: 0;
+            position: fixed;
+            top: 20%;
+            right: 0;
+            background-color: #fff;
+            overflow-y: auto;
+            transition: 0.5s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px 0;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li.answered {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .sidebar ul li:hover {
+            background-color: rgb(157, 210, 236);
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .open-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            z-index: 1100;
+        }
+
+        .open-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .sidebar ul li.answered::after {
+            content: '✔';
+            color: green;
+            margin-left: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            /* Centers the button horizontally */
+            margin-top: 30px;
+            /* Adds some space above the button */
+            margin-bottom: 30px;
+        }
+
+        #submit {
+
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid #287cc5;
+            border-radius: 8px;
+            background-color: #287cc5;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        /* Submit Button Hover Effect */
+        #submit:hover {
+            background-color: #100ddd;
+            transform: translateY(-2px);
+        }
+
+        /* Submit Button Active Effect */
+        #submit:active {
+            background-color: #303ce6;
+            transform: translateY(1px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .instructions {
+                margin: 140px 10px 20px;
+            }
+            .sidebar:hover{
+                z-index: 10005;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <div id="sidebar" class="sidebar">
+            <!-- <button class="close-btn" onclick="toggleSidebar()">×</button> -->
+            <ul id="navList">
+                <li data-question="1"><a href="#question-1">Question 1</a></li>
+                <li data-question="2"><a href="#question-2">Question 2</a></li>
+                <li data-question="3"><a href="#question-3">Question 3</a></li>
+                <li data-question="4"><a href="#question-4">Question 4</a></li>
+                <li data-question="5"><a href="#question-5">Question 5</a></li>
+                <li data-question="6"><a href="#question-6">Question 6</a></li>
+                <li data-question="7"><a href="#question-7">Question 7</a></li>
+                <li data-question="8"><a href="#question-8">Question 8</a></li>
+                <li data-question="9"><a href="#question-9">Question 9</a></li>
+                <li data-question="10"><a href="#question-10">Question 10</a></li>
+            </ul>
+        </div>
+        <button class="open-btn" onclick="toggleSidebar()">☰</button>
+
+        <!-- Header -->
+        <div class="header-box">
+            <div class="header-left">
+                <h1>G.K. Test</h1>
+                <p class="score-info">Total Questions: 10 | Total Marks: 10</p>
+            </div>
+            <div class="timer-container">
+                Time Left: <span id="time">10:00</span>
+                <button id="pause-resume" class="pause-resume" onclick="toggleTimer()">Pause</button>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h2>Instructions</h2>
+            <p>Please read the following instructions carefully before starting the test:</p>
+            <ul>
+                <li>Each question carries 1 mark.</li>
+                <li>You cannot revisit questions once answered.</li>
+                <li>Time is limited to 10 minutes.</li>
+            </ul>
+        </div>
+
+        <!-- Test Form -->
+        <form id="testForm">
+            <div class="question" id="question-1">
+                <h2>Question 1: What is the capital of France?</h2>
+                <label><input type="radio" name="question-1" value="Paris" onclick="answerQuestion(1)">
+                    Paris</label><br>
+                <label><input type="radio" name="question-1" value="Berlin" onclick="answerQuestion(1)">
+                    Berlin</label><br>
+                <label><input type="radio" name="question-1" value="Madrid" onclick="answerQuestion(1)"> Madrid</label>
+            </div>
+            <div class="question" id="question-2">
+                <h2>Question 2: What is 2 + 2?</h2>
+                <label><input type="radio" name="question-2" value="3" onclick="answerQuestion(2)"> 3</label><br>
+                <label><input type="radio" name="question-2" value="4" onclick="answerQuestion(2)"> 4</label><br>
+                <label><input type="radio" name="question-2" value="5" onclick="answerQuestion(2)"> 5</label>
+            </div>
+
+            <div class="question" id="question-3">
+                <h2>Question 3: Which is the largest ocean on Earth?</h2>
+                <label><input type="radio" name="question-3" value="Atlantic" onclick="answerQuestion(3)">
+                    Atlantic</label><br>
+                <label><input type="radio" name="question-3" value="Pacific" onclick="answerQuestion(3)">
+                    Pacific</label><br>
+                <label><input type="radio" name="question-3" value="Indian" onclick="answerQuestion(3)"> Indian</label>
+            </div>
+            <div class="question" id="question-4">
+                <h2>Question 4: Which is the capital of Japan ?</h2>
+                <label><input type="radio" name="question-4" value="Tokyo" onclick="answerQuestion(4)">
+                    Tokyo</label><br>
+                <label><input type="radio" name="question-4" value="Kyoto" onclick="answerQuestion(4)">
+                    kyoto</label><br>
+                <label><input type="radio" name="question-4" value="Osaka" onclick="answerQuestion(4)"> Osaka</label>
+            </div>
+            <div class="question" id="question-5">
+                <h2>Question 5: What is the powerhouse of the cell ?</h2>
+                <label><input type="radio" name="question-5" value="Nucleus" onclick="answerQuestion(5)">
+                    Nucleus</label><br>
+                <label><input type="radio" name="question-5" value="Ribosome" onclick="answerQuestion(5)">
+                    Ribosome</label><br>
+                <label><input type="radio" name="question-5" value="Mitochondria" onclick="answerQuestion(5)">
+                    Mitochondria</label>
+            </div>
+            <div class="question" id="question-6">
+                <h2>Question 6: What is the largest ocean on Earth ?</h2>
+                <label><input type="radio" name="question-6" value="Atlantic Ocean" onclick="answerQuestion(6)">Atlantic
+                    Ocean </label><br>
+                <label><input type="radio" name="question-6" value="Indian Ocean" onclick="answerQuestion(6)"> Indian
+                    ocean</label><br>
+                <label><input type="radio" name="question-6" value="Pacific Ocean" onclick="answerQuestion(6)">Pacific
+                    Ocean</label>
+            </div>
+            <div class="question" id="question-7">
+                <h2>Question 7: Who wrote Hamlet?</h2>
+                <label><input type="radio" name="question-7" value="William Shakespeare"
+                        onclick="answerQuestion(7)">William Shakespeare </label><br>
+                <label><input type="radio" name="question-7" value="Charles Dicken" onclick="answerQuestion(7)"> Charles
+                    Dicken</label><br>
+                <label><input type="radio" name="question-7" value="Mark Twain" onclick="answerQuestion(7)">Mark
+                    Twain</label>
+            </div>
+            <div class="question" id="question-8">
+                <h2>Question 8:What is Boiling point of water?</h2>
+                <label><input type="radio" name="question-8" value="0°C" onclick="answerQuestion(8)">0°C </label><br>
+                <label><input type="radio" name="question-8" value="50°C" onclick="answerQuestion(8)"> 50°C</label><br>
+                <label><input type="radio" name="question-8" value="100°C" onclick="answerQuestion(8)">100°C</label>
+            </div>
+            <div class="question" id="question-9">
+                <h2>Question 9: Who developed the theory of relativity ?</h2>
+                <label><input type="radio" name="question-9" value="Issac Newton" onclick="answerQuestion(9)">Issac
+                    Newton </label><br>
+                <label><input type="radio" name="question-9" value="Albert Einstein" onclick="answerQuestion(9)"> Albert
+                    Einstein</label><br>
+                <label><input type="radio" name="question-9" value="Marie Curie" onclick="answerQuestion(9)">Marie
+                    Curie</label>
+            </div>
+            <div class="question" id="question-10">
+                <h2>Question 10: What is the currency of the United KIngdom ?</h2>
+                <label><input type="radio" name="question-10" value="Euro" onclick="answerQuestion(10)">Euro
+                </label><br>
+                <label><input type="radio" name="question-10" value="Dollar" onclick="answerQuestion(10)">
+                    Dollar</label><br>
+                <label><input type="radio" name="question-10" value="Pound Sterling" onclick="answerQuestion(10)">Pound
+                    Sterling</label>
+            </div>
+
+        </form>
+    </div>
+    <div class="submit-container">
+        <button type="button" id="submit" onclick="submitTest()">Submit</button>
+    </div>
+
+            <!-- b -->
+<div id="pauseModal" class="modal">
+    <h2>Test is Paused</h2>
+    <button id="resumeButton">Resume Test</button>
+</div>
+
+    <script>
+        // Timer Logic
+        let time = 10 * 60;
+        let timerRunning = true;
+        const timerElement = document.getElementById("time");
+
+        function updateTimer() {
+            if (timerRunning) {
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                if (--time < 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up!");
+                }
+            }
+        }
+
+        function toggleTimer() {
+            timerRunning = !timerRunning;
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle the sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+
+        // Handle answering a question
+        function answerQuestion(questionNumber) {
+            // Disable all options for this question
+            const options = document.getElementsByName(`question-${questionNumber}`);
+            options.forEach(option => option.disabled = true);
+
+            // Highlight the corresponding sidebar item
+            const sidebarItem = document.querySelector(`.sidebar ul li[data-question="${questionNumber}"]`);
+            sidebarItem.classList.add("answered");
+
+            // Scroll to the question and highlight it in the sidebar
+            const questionElement = document.getElementById(`question-${questionNumber}`);
+            questionElement.scrollIntoView({ behavior: "smooth" });
+
+            // Highlight the active question
+            document.querySelectorAll(".sidebar ul li").forEach(item => item.classList.remove("active"));
+            sidebarItem.classList.add("active");
+        }
+
+        // Smooth scroll to questions from the sidebar
+        document.querySelectorAll(".sidebar ul li a").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute("href").substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                // Scroll to the target question
+                targetElement.scrollIntoView({ behavior: "smooth" });
+
+                // Highlight the active question in the sidebar
+                document.querySelectorAll(".sidebar ul li").forEach(item => item.classList.remove("active"));
+                this.parentElement.classList.add("active");
+            });
+        });
+
+        function submitTest() {
+            // Correct answers
+            const correctAnswers = {
+                "question-1": "Paris",
+                "question-2": "4",
+                "question-3": "Pacific",
+                "question-4": "Tokyo",
+                "question-5": "Mitochondria",
+                "question-6": "Pacific Ocean",
+                "question-7": "William Shakespeare",
+                "question-8": "100°C",
+                "question-9": "Albert Einstein",
+                "question-10": "Pound Sterling"
+            };
+
+            let score = 0;
+            const userAnswers = {};
+
+            // Check user answers
+            for (let question in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                if (selectedOption) {
+                    userAnswers[question] = selectedOption.value;
+                    if (selectedOption.value === correctAnswers[question]) {
+                        score++;
+                    }
+                } else {
+                    userAnswers[question] = null; // No answer selected
+                }
+            }
+
+            // Store data in localStorage
+            localStorage.setItem("score", score);
+            localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+            localStorage.setItem("correctAnswers", JSON.stringify(correctAnswers));
+
+            // Redirect to the score page
+            window.location.href = "score.html";
+        }
+
+        const questions = {
+            "question-1": "What is the capital of France?",
+            "question-2": "What is 2 + 2?",
+            "question-3": " Which is the largest ocean on earth?",
+            "question-4": " What is the capital of Japan?",
+            "question-5": " What is the powerhouse of cell? ",
+            "question-6": " what is the largest oceans on Earth?",
+            "question-7": " Who wrote 'Hamlet'? ",
+            "question-8": " What is the boiling point of water?",
+            "question-9": " Who developed the Theory of Relativity?",
+            "question-10": " what is the currency of the United Kingdom?",
+
+
+
+        }
+        localStorage.setItem("questions", JSON.stringify(questions));
+
+        // function toggleTimer() {
+        //     timerRunning = !timerRunning;
+        //     const pauseButton = document.getElementById("pause-resume");
+        //     if (timerRunning) {
+        //         pauseButton.textContent = "Pause";
+        //         pauseButton.style.backgroundColor = "#ff5c5c";
+        //     } else {
+        //         pauseButton.textContent = "Resume";
+        //         pauseButton.style.backgroundColor = "#4CAF50";
+        //     }
+        // }
+        // Blur and modal logic
+function toggleTimer() {
+    timerRunning = !timerRunning;
+    const pauseButton = document.getElementById("pause-resume");
+    const modal = document.getElementById("pauseModal");
+    const container = document.querySelector(".container");
+
+    if (!timerRunning) {
+        // Pause the test
+        pauseButton.textContent = "Resume";
+        pauseButton.style.backgroundColor = "#4CAF50";
+        container.classList.add("blur");
+        modal.style.display = "block";
+    } else {
+        // Resume the test
+        pauseButton.textContent = "Pause";
+        pauseButton.style.backgroundColor = "#ff5c5c";
+        container.classList.remove("blur");
+        modal.style.display = "none";
+    }
+}
+
+// Resume button logic
+document.getElementById("resumeButton").addEventListener("click", () => {
+    toggleTimer();
+});
+
+
+
+    </script>
+
+</body>
+
+</html>
